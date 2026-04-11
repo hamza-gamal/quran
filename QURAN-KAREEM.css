@@ -1,0 +1,64 @@
+*
+{
+    margin: 0;
+    padding: 0; 
+ }
+body
+{
+         background-color: #1e1f22;
+         margin-top: 14px;
+         margin: auto;
+         direction: rtl;
+         text-align: center;
+
+}
+.child
+{
+padding-top: 1% ;
+padding-bottom: 1% ;
+}
+
+.hikl
+
+{
+    display: inline-block;
+    width: 120px;
+    line-height: 60px;
+    text-align: center;
+    font-weight: bold;
+    height: 60px;
+    color: #646cff;
+    border-radius:  10px;
+    margin: 10px;
+    transition: 0.3s;
+    font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+    text-decoration: none;
+    border: 1px solid white;
+    text-align: center;
+    font-size: 1.125rem;
+    margin-left: 0;
+    margin-right: 23px;
+        margin: auto;
+    text-align: center;
+
+
+}
+a
+{
+    text-decoration: none;
+    margin: auto;
+    text-align: center;
+}
+.asm-el-3onsor
+{
+    text-align: center;
+    margin-top:3px;
+    margin: auto;
+}
+.hikl:hover
+{
+    background-color: rgb(255, 255, 255);
+    color: #646cff;
+     text-decoration: underline  ;
+
+}
