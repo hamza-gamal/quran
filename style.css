@@ -40,8 +40,8 @@ body {
 }
 
 input {
-    width: 70%;
-    height: 45px;
+    width: 75%;
+    height: 50px;
     color: rgb(229, 231, 235);
     background-color: rgba(0, 0, 0, 0.4);
     border: solid 1px rgb(61, 61, 61);
