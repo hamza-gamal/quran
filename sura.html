@@ -62,6 +62,73 @@
         margin-top: 8px;
       }
 
+      .audio-box {
+        margin-top: 18px;
+        padding: 18px;
+        background: linear-gradient(135deg, #111827, #17255466);
+        border: 1px solid rgb(31, 41, 55);
+        border-radius: 18px;
+        box-shadow: 0 14px 35px rgba(0, 0, 0, 0.18);
+      }
+
+      .audio-box p {
+        margin: 0 0 10px;
+        color: rgb(96, 165, 250);
+        font-size: 0.95rem;
+      }
+
+      .audio-player {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        width: 100%;
+      }
+
+      .play-btn {
+        width: 48px;
+        height: 48px;
+        flex: 0 0 48px;
+        border: 1px solid rgba(96, 165, 250, 0.5);
+        border-radius: 50%;
+        color: #fff;
+        background: linear-gradient(135deg, rgb(59, 130, 246), #1d4ed8);
+        cursor: pointer;
+        font-size: 1.2rem;
+        transition: 0.25s;
+      }
+
+      .play-btn:hover {
+        transform: scale(1.06);
+        box-shadow: 0 0 20px rgba(59, 130, 246, 0.35);
+      }
+
+      .player-details {
+        width: 100%;
+      }
+
+      .player-row {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        color: #dbeafe;
+        font-size: 0.85rem;
+        margin-bottom: 8px;
+      }
+
+      .progress {
+        width: 100%;
+        height: 7px;
+        direction: ltr;
+        accent-color: rgb(96, 165, 250);
+        cursor: pointer;
+      }
+
+      .audio-message {
+        margin-top: 8px;
+        color: #93c5fd;
+        font-size: 0.8rem;
+      }
+
       .ayat-container {
         max-width: 850px;
         margin: auto;
@@ -164,6 +231,41 @@
         &#1575;&#1604;&#1578;&#1581;&#1605;&#1610;&#1604;...
       </h1>
       <p class="sura-info" id="sura-info"></p>
+      <div class="audio-box">
+        <p>
+          &#1578;&#1604;&#1575;&#1608;&#1577;
+          &#1575;&#1604;&#1588;&#1610;&#1582; &#1593;&#1576;&#1583;
+          &#1575;&#1604;&#1576;&#1575;&#1587;&#1591; &#1593;&#1576;&#1583;
+          &#1575;&#1604;&#1589;&#1605;&#1583;
+        </p>
+        <div class="audio-player">
+          <button class="play-btn" id="play-btn" type="button">&#9654;</button>
+          <div class="player-details">
+            <div class="player-row">
+              <span id="audio-status"
+                >&#1580;&#1575;&#1585;&#1610;
+                &#1578;&#1580;&#1607;&#1610;&#1586;
+                &#1575;&#1604;&#1578;&#1604;&#1575;&#1608;&#1577;...</span
+              >
+              <span id="audio-time">0:00 / 0:00</span>
+            </div>
+            <input
+              class="progress"
+              id="audio-progress"
+              type="range"
+              min="0"
+              max="100"
+              value="0"
+            />
+          </div>
+        </div>
+        <div class="audio-message" id="audio-message"></div>
+        <audio
+          id="quran-audio"
+          preload="metadata"
+          crossorigin="anonymous"
+        ></audio>
+      </div>
     </div>
 
     <div class="ayat-container" id="ayat-container">
@@ -177,71 +279,183 @@
       const id = new URLSearchParams(window.location.search).get("id") || "1";
       const bismillah =
         "\u0628\u0650\u0633\u0652\u0645\u0650 \u0627\u0644\u0644\u0651\u064e\u0647\u0650 \u0627\u0644\u0631\u0651\u064e\u062d\u0652\u0645\u064e\u0670\u0646\u0650 \u0627\u0644\u0631\u0651\u064e\u062d\u0650\u064a\u0645\u0650";
+      const audio = document.getElementById("quran-audio");
+      const playBtn = document.getElementById("play-btn");
+      const audioStatus = document.getElementById("audio-status");
+      const audioTime = document.getElementById("audio-time");
+      const audioProgress = document.getElementById("audio-progress");
+      const audioMessage = document.getElementById("audio-message");
 
-      fetch(`https://api.alquran.cloud/v1/surah/${id}`)
-        .then((res) => res.json())
+      let currentSurah = null;
+      let currentAyaIndex = 0;
+      let isDragging = false;
+
+      // Load Surah Data with Audio
+      fetch(`https://api.alquran.cloud/v1/surah/${id}/ar.abdulbasit_mujawwad`)
+        .then((r) => r.json())
         .then((data) => {
-          const sura = data.data;
-
-          document.title = `Quran | ${sura.name}`;
-          const container = document.getElementById("ayat-container");
-          const page = document.createElement("div");
-          const text = document.createElement("div");
-
-          //   document.title =  sura.name;
-          document.getElementById("sura-name").textContent = sura.name;
+          currentSurah = data.data;
+          document.title = `Quran | ${currentSurah.name}`;
+          document.getElementById("sura-name").textContent = currentSurah.name;
           document.getElementById("sura-info").textContent =
-            "\u0639\u062f\u062f \u0627\u0644\u0622\u064a\u0627\u062a: " +
-            sura.numberOfAyahs +
+            "عدد الآيات: " +
+            currentSurah.numberOfAyahs +
             " | " +
-            (sura.revelationType === "Meccan"
-              ? "\u0645\u0643\u064a\u0629"
-              : "\u0645\u062f\u0646\u064a\u0629");
-
-          container.innerHTML = "";
-          page.className = "quran-page";
-          text.className = "aya-text";
-
-          if (sura.number !== 1 && sura.number !== 9) {
-            const basmala = document.createElement("span");
-            basmala.className = "bismillah";
-            basmala.textContent = bismillah;
-            page.appendChild(basmala);
-          }
-
-          sura.ayahs.forEach((aya) => {
-            const ayaText = document.createTextNode(
-              removeBismillah(aya.text, sura.number, aya.numberInSurah),
-            );
-            const ayaNumber = document.createElement("span");
-
-            ayaNumber.className = "aya-number";
-            ayaNumber.textContent = aya.numberInSurah;
-
-            text.appendChild(ayaText);
-            text.appendChild(ayaNumber);
-          });
-
-          page.appendChild(text);
-          container.appendChild(page);
+            (currentSurah.revelationType === "Meccan" ? "مكية" : "مدنية");
+          initAudio();
+          renderAyahs();
         })
-        .catch(() => {
-          document.getElementById("ayat-container").innerHTML =
-            '<p class="error">&#1581;&#1583;&#1579; &#1582;&#1591;&#1571; &#1601;&#1610; &#1578;&#1581;&#1605;&#1610;&#1604; &#1575;&#1604;&#1587;&#1608;&#1585;&#1577;&#1548; &#1578;&#1581;&#1602;&#1602; &#1605;&#1606; &#1575;&#1604;&#1575;&#1578;&#1589;&#1575;&#1604; &#1576;&#1575;&#1604;&#1573;&#1606;&#1578;&#1585;&#1606;&#1578;</p>';
+        .catch((err) => {
+          console.error(err);
+          // Fallback إذا فشل
+          fetch(`https://api.alquran.cloud/v1/surah/${id}`)
+            .then((r) => r.json())
+            .then((d) => {
+              currentSurah = d.data;
+              initAudio();
+              renderAyahs();
+            });
         });
+
+      function getAudioUrl(ayahIndex) {
+        if (!currentSurah || !currentSurah.ayahs[ayahIndex]) return "";
+
+        const ayahNumber = currentSurah.ayahs[ayahIndex].number;
+
+        return `https://cdn.islamic.network/quran/audio/192/ar.abdulbasitmujawwad/${ayahNumber}.mp3`;
+      }
+      function initAudio() {
+        if (!currentSurah) return;
+        audioStatus.textContent = "جاهز ✓";
+        audioProgress.value = 0;
+        loadAudioAyah(0);
+      }
+
+      function loadAudioAyah(index) {
+        if (!currentSurah || index >= currentSurah.ayahs.length) return;
+
+        currentAyaIndex = index;
+        const aya = currentSurah.ayahs[index];
+        const ayahInSurah = aya.numberInSurah;
+
+        const audioSrc = getAudioUrl(index);
+
+        audio.src = audioSrc;
+        audioStatus.textContent = `الآية ${ayahInSurah} من ${currentSurah.numberOfAyahs}`;
+        audioProgress.value = 0;
+        audioMessage.textContent = "جاري التحميل...";
+      }
+
+      playBtn.addEventListener("click", () => {
+        if (!audio.src) return;
+        if (audio.paused) {
+          audio.play().catch((err) => {
+            console.error(err);
+            audioMessage.textContent = "خطأ في التشغيل";
+          });
+        } else {
+          audio.pause();
+        }
+      });
+
+      audio.addEventListener("play", () => {
+        playBtn.innerHTML = "&#10074;&#10074;";
+      });
+
+      audio.addEventListener("pause", () => {
+        playBtn.innerHTML = "&#9654;";
+      });
+
+      audio.addEventListener("timeupdate", () => {
+        if (!isDragging) {
+          audioProgress.value = (audio.currentTime / audio.duration) * 100 || 0;
+        }
+        audioTime.textContent =
+          formatTime(audio.currentTime) + " / " + formatTime(audio.duration);
+      });
+
+      audio.addEventListener("canplay", () => {
+        audioMessage.textContent = "✓ جاهز";
+      });
+
+      audio.addEventListener("ended", () => {
+        if (currentAyaIndex < currentSurah.ayahs.length - 1) {
+          loadAudioAyah(currentAyaIndex + 1);
+          audio.play();
+        } else {
+          audioStatus.textContent = "انتهت التلاوة ✓";
+          playBtn.innerHTML = "&#9654;";
+        }
+      });
+
+      audio.addEventListener("error", (e) => {
+        // شيل الحلقة اللانهائية! فقط أخبر المستخدم
+        audioMessage.textContent =
+          "⚠️ لم يتم تحميل الملف - تأكد من وجود مجلد audio/";
+        console.error(
+          "Audio file not found:",
+          currentSurah.ayahs[currentAyaIndex].number,
+        );
+      });
+
+      audioProgress.addEventListener("mousedown", () => {
+        isDragging = true;
+      });
+
+      audioProgress.addEventListener("change", () => {
+        if (audio.duration) {
+          audio.currentTime = (audioProgress.value / 100) * audio.duration;
+        }
+        isDragging = false;
+      });
+
+      function formatTime(seconds) {
+        if (!Number.isFinite(seconds)) return "0:00";
+        const mins = Math.floor(seconds / 60);
+        const secs = Math.floor(seconds % 60)
+          .toString()
+          .padStart(2, "0");
+        return mins + ":" + secs;
+      }
+
+      function renderAyahs() {
+        const container = document.getElementById("ayat-container");
+        const page = document.createElement("div");
+        page.className = "quran-page";
+
+        const text = document.createElement("div");
+        text.className = "aya-text";
+
+        if (currentSurah.number !== 1 && currentSurah.number !== 9) {
+          const basmala = document.createElement("span");
+          basmala.className = "bismillah";
+          basmala.textContent = bismillah;
+          page.appendChild(basmala);
+        }
+
+        currentSurah.ayahs.forEach((aya) => {
+          const ayaText = document.createTextNode(
+            removeBismillah(aya.text, currentSurah.number, aya.numberInSurah),
+          );
+          const ayaNumber = document.createElement("span");
+          ayaNumber.className = "aya-number";
+          ayaNumber.textContent = aya.numberInSurah;
+
+          text.appendChild(ayaText);
+          text.appendChild(ayaNumber);
+        });
+
+        page.appendChild(text);
+        container.innerHTML = "";
+        container.appendChild(page);
+      }
 
       function removeBismillah(text, suraNumber, ayaNumber) {
         if (suraNumber === 1 || suraNumber === 9 || ayaNumber !== 1) {
           return text;
         }
-
         const words = text.trim().split(/\s+/);
-
-        if (words.length > 4) {
-          return words.slice(4).join(" ");
-        }
-
-        return text;
+        return words.length > 4 ? words.slice(4).join(" ") : text;
       }
     </script>
   </body>
