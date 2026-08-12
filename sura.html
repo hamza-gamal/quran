@@ -320,9 +320,11 @@
       function getAudioUrl(ayahIndex) {
         if (!currentSurah || !currentSurah.ayahs[ayahIndex]) return "";
 
-        const ayahNumber = currentSurah.ayahs[ayahIndex].number;
+        const ayah = currentSurah.ayahs[ayahIndex];
+        const surahNumber = String(currentSurah.number).padStart(3, "0");
+        const ayahNumber = String(ayah.numberInSurah).padStart(3, "0");
 
-        return `https://cdn.islamic.network/quran/audio/192/ar.abdulbasitmujawwad/${ayahNumber}.mp3`;
+        return `https://everyayah.com/data/Abdul_Basit_Mujawwad_128kbps/${surahNumber}${ayahNumber}.mp3`;
       }
       function initAudio() {
         if (!currentSurah) return;
