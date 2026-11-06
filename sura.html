@@ -363,18 +363,21 @@
         justify-content: center;
         gap: 7px;
         margin: 0;
+        position: relative;
+        top: -6px;
         padding: 10px 16px;
         color: #bfdbfe;
         background: rgba(17, 24, 39, 0.62);
         border: 1px solid rgba(59, 130, 246, 0.22);
-        border-radius: 12px 12px 0 0;
+        border-radius: 12px;
         font-size: 0.9rem;
         line-height: 1;
         direction: rtl;
         transition:
           color 0.2s ease,
           background-color 0.2s ease,
-          border-color 0.2s ease;
+          border-color 0.2s ease,
+          transform 0.2s ease;
       }
 
       .back-link-row .back-btn svg {
@@ -384,6 +387,7 @@
       }
 
       .back-link-row .back-btn:hover {
+        transform: translateY(-2px);
         color: #fff;
         background: #172554;
         border-color: rgba(59, 130, 246, 0.65);
@@ -433,12 +437,13 @@
 
       .audio-heading {
         display: grid;
-        grid-template-columns: auto minmax(0, 1fr);
+        grid-template-columns: 40px minmax(0, 1fr);
         grid-template-areas:
           "gear title"
           "panel panel";
         align-items: center;
-        gap: 12px;
+        column-gap: 12px;
+        row-gap: 6px;
         margin-bottom: 14px;
         direction: rtl;
       }
@@ -501,10 +506,11 @@
 
       .playback-options {
         grid-area: panel;
-        justify-self: center;
+        justify-self: start;
+        align-self: start;
         display: grid;
         box-sizing: border-box;
-        width: clamp(260px, 32vw, 360px);
+        width: min(360px, calc(100vw - 104px));
         max-width: 360px;
         gap: 6px;
         margin: 0;
@@ -797,9 +803,9 @@
         }
 
         .playback-options {
-          width: 100%;
+          width: min(360px, calc(100vw - 104px));
           max-width: 360px;
-          justify-self: center;
+          justify-self: start;
           padding: 8px;
         }
 
