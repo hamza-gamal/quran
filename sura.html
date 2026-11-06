@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="ar" dir="rtl">
   <head>
-    <link rel="icon" href="images/unnamed (1).webp" type="image/x-icon" />
+    <link rel="icon" href="images/Quran.png" type="image/svg+xml" />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- <title>&#1587;&#1608;&#1585;&#1577;</title> -->
@@ -355,42 +355,110 @@
         justify-content: center;
         margin: 0 auto;
         direction: ltr;
+        position: relative;
+        z-index: 2;
       }
 
       .back-link-row .back-btn {
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        gap: 7px;
         margin: 0;
         position: relative;
         top: -6px;
-        padding: 10px 16px;
-        color: #bfdbfe;
-        background: rgba(17, 24, 39, 0.62);
-        border: 1px solid rgba(59, 130, 246, 0.22);
-        border-radius: 12px;
-        font-size: 0.9rem;
-        line-height: 1;
-        direction: rtl;
+        width: 64px;
+        height: 64px;
+        box-sizing: border-box;
+        padding: 7px;
+        background: linear-gradient(145deg, #172554, #111827);
+        border: 1px solid rgba(96, 165, 250, 0.38);
+        border-radius: 17px;
+        box-shadow:
+          0 8px 20px rgba(0, 0, 0, 0.24),
+          inset 0 1px rgba(255, 255, 255, 0.06);
         transition:
-          color 0.2s ease,
-          background-color 0.2s ease,
+          transform 0.2s ease,
           border-color 0.2s ease,
-          transform 0.2s ease;
+          box-shadow 0.2s ease;
       }
 
-      .back-link-row .back-btn svg {
-        width: 18px;
-        height: 18px;
-        fill: currentColor;
+      .back-link-row .back-btn img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        border-radius: 11px;
       }
 
-      .back-link-row .back-btn:hover {
+      .back-link-row .back-btn::before,
+      .back-link-row .back-btn::after {
+        position: absolute;
+        left: 50%;
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transition:
+          opacity 0.18s ease,
+          transform 0.18s ease,
+          visibility 0.18s ease;
+        transform: translate(-50%, -4px);
+      }
+
+      .back-link-row .back-btn::before {
+        content: "";
+        top: calc(100% + 7px);
+        width: 10px;
+        height: 10px;
+        background: #111827;
+        border-top: 1px solid rgba(96, 165, 250, 0.32);
+        border-left: 1px solid rgba(96, 165, 250, 0.32);
+        transform: translate(-50%, -4px) rotate(45deg);
+      }
+
+      .back-link-row .back-btn::after {
+        content: "العودة إلى الصفحة الرئيسية";
+        top: calc(100% + 11px);
+        width: max-content;
+        max-width: min(230px, calc(100vw - 32px));
+        box-sizing: border-box;
+        padding: 8px 12px;
+        color: #dbeafe;
+        background: #111827;
+        border: 1px solid rgba(96, 165, 250, 0.32);
+        border-radius: 10px;
+        box-shadow: 0 8px 22px rgba(0, 0, 0, 0.3);
+        font-size: 0.78rem;
+        font-weight: 600;
+        line-height: 1.4;
+        direction: rtl;
+        white-space: nowrap;
+      }
+
+      .back-link-row .back-btn:hover,
+      .back-link-row .back-btn:focus-visible {
         transform: translateY(-2px);
-        color: #fff;
-        background: #172554;
-        border-color: rgba(59, 130, 246, 0.65);
+        border-color: rgba(96, 165, 250, 0.75);
+        box-shadow:
+          0 11px 24px rgba(0, 0, 0, 0.3),
+          0 0 0 3px rgba(59, 130, 246, 0.1);
+      }
+
+      .back-link-row .back-btn:hover::before,
+      .back-link-row .back-btn:hover::after,
+      .back-link-row .back-btn:focus-visible::before,
+      .back-link-row .back-btn:focus-visible::after {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .back-link-row .back-btn:hover::before,
+      .back-link-row .back-btn:focus-visible::before {
+        transform: translate(-50%, 0) rotate(45deg);
+      }
+
+      .back-link-row .back-btn:hover::after,
+      .back-link-row .back-btn:focus-visible::after {
+        transform: translate(-50%, 0);
       }
 
       .box-start {
@@ -895,10 +963,7 @@
         aria-label="العودة إلى الرئيسية"
         title="العودة إلى الرئيسية"
       >
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
-        </svg>
-        <span>الرئيسية</span>
+        <img src="images/Quran.png" alt="" />
       </a>
     </div>
     <div class="box-start">
@@ -1051,6 +1116,7 @@
           ></audio>
         </div>
       </div>
+    </div>
     <div class="ayat-container" id="ayat-container">
       <p class="loading">
         &#1580;&#1575;&#1585;&#1610; &#1578;&#1581;&#1605;&#1610;&#1604;
@@ -1089,6 +1155,11 @@
       let repeatCurrent = localStorage.getItem("quran-player-repeat") === "true";
       let autoNextSurah = localStorage.getItem("quran-player-auto-next") === "true";
 
+      if (repeatCurrent && autoNextSurah) {
+        autoNextSurah = false;
+        localStorage.setItem("quran-player-auto-next", "false");
+      }
+
       function updateVolumeValue() {
         volumeValue.textContent = `${Math.round(audio.volume * 100)}%`;
       }
@@ -1103,6 +1174,75 @@
         autoNextToggle.setAttribute("aria-pressed", String(autoNextSurah));
       }
 
+      function updateMediaSessionMetadata() {
+        if (
+          !("mediaSession" in navigator) ||
+          typeof MediaMetadata === "undefined" ||
+          !currentSurah
+        ) {
+          return;
+        }
+
+        const title = fullSurahMode
+          ? currentSurah.name
+          : `${currentSurah.name} - الآية ${currentAyaIndex + 1}`;
+        const artwork =
+          window.location.protocol === "file:"
+            ? []
+            : [
+                {
+                  src: new URL("images/unnamed.webp", document.baseURI).href,
+                  sizes: "240x240",
+                  type: "image/webp",
+                },
+              ];
+        navigator.mediaSession.metadata = new MediaMetadata({
+          title,
+          artist: "الشيخ عبد الباسط عبد الصمد",
+          album: "القرآن الكريم",
+          artwork,
+        });
+      }
+
+      function setupMediaSession() {
+        if (!("mediaSession" in navigator)) return;
+
+        const mediaSession = navigator.mediaSession;
+        mediaSession.setActionHandler("play", playCurrentSelection);
+        mediaSession.setActionHandler("pause", () => audio.pause());
+
+        const supportedActions = mediaSession.getSupportedActions?.() ?? [];
+        if (supportedActions.includes("previoustrack")) {
+          mediaSession.setActionHandler("previoustrack", () => prevBtn.click());
+        }
+        if (supportedActions.includes("nexttrack")) {
+          mediaSession.setActionHandler("nexttrack", () => nextBtn.click());
+        }
+        if (supportedActions.includes("seekbackward")) {
+          mediaSession.setActionHandler("seekbackward", ({ seekOffset = 10 }) => {
+            if (Number.isFinite(audio.currentTime)) {
+              audio.currentTime = Math.max(0, audio.currentTime - seekOffset);
+            }
+          });
+        }
+        if (supportedActions.includes("seekforward")) {
+          mediaSession.setActionHandler("seekforward", ({ seekOffset = 10 }) => {
+            if (!Number.isFinite(audio.duration)) return;
+            audio.currentTime = Math.min(
+              audio.duration,
+              audio.currentTime + seekOffset,
+            );
+          });
+        }
+        if (supportedActions.includes("seekto")) {
+          mediaSession.setActionHandler("seekto", ({ seekTime }) => {
+            if (Number.isFinite(seekTime) && Number.isFinite(audio.duration)) {
+              audio.currentTime = Math.min(audio.duration, seekTime);
+            }
+          });
+        }
+      }
+
       const savedVolumeValue = localStorage.getItem("quran-player-volume");
       const savedVolume =
         savedVolumeValue === null ? Number.NaN : Number(savedVolumeValue);
@@ -1113,6 +1253,7 @@
       volumeControl.value = String(audio.volume);
       updateVolumeValue();
       updatePlaybackToggles();
+      setupMediaSession();
 
       settingsToggle.addEventListener("click", () => {
         const isExpanded = settingsToggle.getAttribute("aria-expanded") === "true";
@@ -1165,12 +1306,20 @@
 
       repeatToggle.addEventListener("click", () => {
         repeatCurrent = !repeatCurrent;
+        if (repeatCurrent) {
+          autoNextSurah = false;
+          localStorage.setItem("quran-player-auto-next", "false");
+        }
         localStorage.setItem("quran-player-repeat", String(repeatCurrent));
         updatePlaybackToggles();
       });
 
       autoNextToggle.addEventListener("click", () => {
         autoNextSurah = !autoNextSurah;
+        if (autoNextSurah) {
+          repeatCurrent = false;
+          localStorage.setItem("quran-player-repeat", "false");
+        }
         localStorage.setItem("quran-player-auto-next", String(autoNextSurah));
         updatePlaybackToggles();
       });
@@ -1199,6 +1348,7 @@
           " | " +
           (currentSurah.revelationType === "Meccan" ? "مكية" : "مدنية");
         updateSurahNavigation();
+        updateMediaSessionMetadata();
         initAudio();
         renderAyahs();
       }
@@ -1298,6 +1448,7 @@
 
         currentAyaIndex = index;
         updatePlaybackNavigation();
+        updateMediaSessionMetadata();
         const aya = currentSurah.ayahs[index];
         const src = getAudioUrl(index);
 
@@ -1329,6 +1480,7 @@
         const src = getFullSurahAudioUrl();
         if (!src) return;
 
+        updateMediaSessionMetadata();
         audio.src = src;
         audio.load();
         audioStatus.textContent = `السورة كاملة: ${currentSurah.name}`;
@@ -1353,6 +1505,17 @@
 
       function playCurrentSelection() {
         if (!currentSurah) return;
+
+        const src = fullSurahMode
+          ? getFullSurahAudioUrl()
+          : getAudioUrl(currentAyaIndex);
+        if (src && audio.src === new URL(src, document.baseURI).href) {
+          audio.play().catch((err) => {
+            console.error(err);
+            audioMessage.textContent = "تعذر التشغيل، جرّب مرة أخرى";
+          });
+          return;
+        }
 
         if (fullSurahMode) {
           loadFullSurah(true);
@@ -1413,10 +1576,16 @@
 
       audio.addEventListener("play", () => {
         updatePlayButton(true);
+        if ("mediaSession" in navigator) {
+          navigator.mediaSession.playbackState = "playing";
+        }
       });
 
       audio.addEventListener("pause", () => {
         updatePlayButton(false);
+        if ("mediaSession" in navigator) {
+          navigator.mediaSession.playbackState = "paused";
+        }
       });
 
       audio.addEventListener("timeupdate", () => {
@@ -1429,6 +1598,18 @@
         }
         audioTime.textContent =
           formatTime(audio.currentTime) + " / " + formatTime(audio.duration);
+        if (
+          "mediaSession" in navigator &&
+          typeof navigator.mediaSession.setPositionState === "function" &&
+          Number.isFinite(audio.duration) &&
+          audio.duration > 0
+        ) {
+          navigator.mediaSession.setPositionState({
+            duration: audio.duration,
+            playbackRate: audio.playbackRate,
+            position: audio.currentTime,
+          });
+        }
       });
 
       audio.addEventListener("canplay", () => {
@@ -1436,6 +1617,9 @@
       });
 
       audio.addEventListener("ended", () => {
+        if ("mediaSession" in navigator) {
+          navigator.mediaSession.playbackState = "paused";
+        }
         if (!currentSurah) return;
 
         if (repeatCurrent) {

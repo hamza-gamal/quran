@@ -128,15 +128,25 @@ input:focus {
 }
 
 .icon-Qran {
-  width: 35px;
-  height: 35px;
+  width: 70px;
+  height: 70px;
+  box-sizing: border-box;
   border: solid 1px #2e4779;
-  padding: 14px;
+  padding: 8px;
   margin-bottom: -5px;
   border-radius: 15px;
   display: inline-flex;
+  align-items: center;
+  justify-content: center;
   animation: icon 1s infinite alternate;
   background-color: rgba(33, 57, 97, 0.5);
+}
+
+.icon-Qran img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 @keyframes icon {
