@@ -660,6 +660,32 @@
     </script>
     <script>
       if (
+        window.matchMedia("(hover: hover) and (pointer: fine)").matches &&
+        !window.matchMedia("(prefers-reduced-motion: reduce)").matches
+      ) {
+        suras.forEach((sura) => {
+          sura.addEventListener("pointermove", (event) => {
+            const bounds = sura.getBoundingClientRect();
+            const x = (event.clientX - bounds.left) / bounds.width;
+            const y = (event.clientY - bounds.top) / bounds.height;
+            const tiltX = (0.5 - y) * 5;
+            const tiltY = (0.5 - x) * 5;
+
+            sura.style.setProperty("--tilt-x", `${tiltX.toFixed(2)}deg`);
+            sura.style.setProperty("--tilt-y", `${tiltY.toFixed(2)}deg`);
+            sura.classList.add("is-tilting");
+          });
+
+          sura.addEventListener("pointerleave", () => {
+            sura.style.removeProperty("--tilt-x");
+            sura.style.removeProperty("--tilt-y");
+            sura.classList.remove("is-tilting");
+          });
+        });
+      }
+    </script>
+    <script>
+      if (
         "serviceWorker" in navigator &&
         window.isSecureContext
       ) {
