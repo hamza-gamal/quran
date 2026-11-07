@@ -13,7 +13,7 @@ self.addEventListener("fetch", (event) => {
   if (
     request.method === "GET" &&
     url.origin === self.location.origin &&
-    (request.mode === "navigate" || url.pathname.endsWith(".css"))
+    (request.mode === "navigate" || url.pathname.endsWith(".css") || url.pathname.endsWith(".png"))
   ) {
     event.respondWith(fetch(request, { cache: "no-store" }));
   }

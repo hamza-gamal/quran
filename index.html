@@ -3,9 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" href="images/Quran.png" type="image/svg+xml" />
+    <link rel="icon" href="images/Quran.png?v=3" type="image/png" />
+    <link rel="apple-touch-icon" href="images/Quran.png?v=3" />
     <title>Quran</title>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="style.css?v=7" />
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
@@ -37,20 +38,13 @@
               d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25"
             ></path>
           </svg> -->
-          <img src="images/Quran.png" alt="" >
+          <img src="images/Quran.png?v=3" alt="القرآن الكريم" >
         </div>
       </a>
-      <h1 style="color: #fff; font-size: 36px; padding-bottom: -10px">
+      <h1 class="main-title">
         المصحف الشريف
       </h1>
-      <h2
-        style="
-          color: rgb(96, 165, 250);
-          margin-top: -20px;
-          font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-          font-size: 20px;
-        "
-      >
+      <h2 class="sub-title">
         جميع سور القرآن الكريم
       </h2>
       <div class="search-box">
@@ -660,28 +654,36 @@
       });
     </script>
     <script>
-      if (
-        window.matchMedia("(hover: hover) and (pointer: fine)").matches &&
-        !window.matchMedia("(prefers-reduced-motion: reduce)").matches
-      ) {
+      if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
         suras.forEach((sura) => {
-          sura.addEventListener("pointermove", (event) => {
+          function onPointerMove(event) {
             const bounds = sura.getBoundingClientRect();
             const x = (event.clientX - bounds.left) / bounds.width;
             const y = (event.clientY - bounds.top) / bounds.height;
-            const tiltX = (0.5 - y) * 5;
-            const tiltY = (0.5 - x) * 5;
+            // زوايا ميلان ثلاثية الأبعاد واضحة ومتوازنة
+            const tiltX = (0.5 - y) * 16;
+            const tiltY = (x - 0.5) * 16;
 
             sura.style.setProperty("--tilt-x", `${tiltX.toFixed(2)}deg`);
             sura.style.setProperty("--tilt-y", `${tiltY.toFixed(2)}deg`);
+            sura.style.setProperty("--glow-x", `${(x * 100).toFixed(1)}%`);
+            sura.style.setProperty("--glow-y", `${(y * 100).toFixed(1)}%`);
             sura.classList.add("is-tilting");
-          });
+          }
 
-          sura.addEventListener("pointerleave", () => {
+          function onPointerReset() {
             sura.style.removeProperty("--tilt-x");
             sura.style.removeProperty("--tilt-y");
+            sura.style.removeProperty("--glow-x");
+            sura.style.removeProperty("--glow-y");
             sura.classList.remove("is-tilting");
-          });
+          }
+
+          sura.addEventListener("pointermove", onPointerMove, { passive: true });
+          sura.addEventListener("pointerdown", onPointerMove, { passive: true });
+          sura.addEventListener("pointerleave", onPointerReset);
+          sura.addEventListener("pointerup", onPointerReset);
+          sura.addEventListener("pointercancel", onPointerReset);
         });
       }
     </script>

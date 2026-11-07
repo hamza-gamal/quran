@@ -1,124 +1,191 @@
+@import url("https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@400;500;700;800&family=Exo+2:wght@400;600;700&display=swap");
+
+:root {
+  /* درجات اللون الأرجواني الملكي الفاخر (Imperial / Royal Purple & Magenta) */
+  --arjuwani-primary: #c026d3;
+  --arjuwani-bright: #d946ef;
+  --arjuwani-light: #e879f9;
+  --arjuwani-hover: #f0abfc;
+  --arjuwani-dark: #86198f;
+  --arjuwani-deep: #581c87;
+  --arjuwani-glow: rgba(217, 70, 239, 0.5);
+  --arjuwani-glow-subtle: rgba(192, 38, 211, 0.2);
+  --bg-deep: #090514;
+  --bg-card: rgba(28, 14, 44, 0.72);
+  --border-card: rgba(217, 70, 239, 0.28);
+  --text-main: #fdf4ff;
+  --text-muted: #d8b4fe;
+}
+
+* {
+  box-sizing: border-box;
+}
+
 body {
-  background-color: #1e1f22;
-  margin: auto;
+  background-color: var(--bg-deep);
+  background-image:
+    radial-gradient(
+      ellipse at 50% -10%,
+      rgba(192, 38, 211, 0.28),
+      transparent 55%
+    ),
+    radial-gradient(
+      circle at 85% 30%,
+      rgba(217, 70, 239, 0.16),
+      transparent 45%
+    ),
+    radial-gradient(
+      circle at 15% 70%,
+      rgba(147, 51, 234, 0.14),
+      transparent 50%
+    );
+  background-attachment: fixed;
+  margin: 0;
+  padding: 30px 10px 60px;
   direction: rtl;
-  font-family: "Exo 2", sans-serif;
-  padding: 30px 0px;
+  font-family: "Tajawal", "Exo 2", sans-serif;
   text-align: center;
+  color: var(--text-main);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  /* ── مؤشر ماوس أرجواني ملكي فخم (السهم الافتراضي) ── */
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23f0abfc'/%3E%3Cstop offset='50%25' stop-color='%23d946ef'/%3E%3Cstop offset='100%25' stop-color='%239333ea'/%3E%3C/linearGradient%3E%3Cfilter id='f' x='-20%25' y='-20%25' width='150%25' height='150%25'%3E%3CfeDropShadow dx='0' dy='1' stdDeviation='1.2' flood-color='%23000' flood-opacity='0.6'/%3E%3CfeDropShadow dx='0' dy='0' stdDeviation='2.5' flood-color='%23d946ef' flood-opacity='0.6'/%3E%3C/filter%3E%3C/defs%3E%3Cpath d='M4 3l13 7-6 2-3 7L4 3z' fill='url(%23g)' stroke='%23ffffff' stroke-width='1.2' stroke-linejoin='round' filter='url(%23f)'/%3E%3C/svg%3E") 4 3, auto;
 }
 
-input:focus {
-  outline: none;
-  border-width: 2px;
-  border-color: #5d90ff;
+/* ── مؤشر اليد الإشارة الأرجواني الفخم والمستقيم (أنيق وطبيعي 100% عند الأزرار والروابط) ── */
+a,
+button,
+input[type="range"],
+input[type="search"],
+input[type="submit"],
+.hikl,
+[role="button"],
+.ctrl-btn,
+.mode-seg-btn,
+.toolbar-pill,
+.nav-surah-link,
+.bottom-nav-btn {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cdefs%3E%3ClinearGradient id='gp' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23ffffff'/%3E%3Cstop offset='30%25' stop-color='%23f5d0fe'/%3E%3Cstop offset='70%25' stop-color='%23e879f9'/%3E%3Cstop offset='100%25' stop-color='%23c026d3'/%3E%3C/linearGradient%3E%3Cfilter id='fp' x='-30%25' y='-30%25' width='160%25' height='160%25'%3E%3CfeDropShadow dx='0' dy='1' stdDeviation='1.2' flood-color='%23000000' flood-opacity='0.65'/%3E%3CfeDropShadow dx='0' dy='0' stdDeviation='2.5' flood-color='%23d946ef' flood-opacity='0.75'/%3E%3C/filter%3E%3C/defs%3E%3Cpath d='M 8 1 A 1.6 1.6 0 0 1 9.6 2.6 L 9.6 10 A 1.5 1.5 0 0 1 12.6 10 L 12.6 10.5 A 1.5 1.5 0 0 1 15.6 10.5 L 15.6 11 A 1.5 1.5 0 0 1 18.6 11 L 18.6 14.5 C 18.6 18 16 21 12.5 21 L 9.5 21 C 6.5 21 4.5 19 3.5 16.5 L 2.2 13.5 C 1.8 12.5 2.2 11.4 3.2 11 C 4.1 10.6 5.1 11 5.6 11.9 L 6.4 13.5 L 6.4 2.6 A 1.6 1.6 0 0 1 8 1 Z' fill='url(%23gp)' stroke='%23ffffff' stroke-width='1.1' stroke-linejoin='round' filter='url(%23fp)'/%3E%3C/svg%3E") 8 1, pointer !important;
 }
 
+/* ── البطاقة الرئيسية العلوية ── */
 .box-start {
-  margin: auto;
+  margin: 0 auto 34px;
   direction: ltr;
-  background-color: #0d173666;
-  margin-bottom: 30px;
+  background: var(--bg-card);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
   width: 90%;
-  max-width: 700px;
+  max-width: 740px;
   overflow: hidden;
   min-height: 350px;
   height: auto;
   position: relative;
-  border-radius: 20px;
-  border: 0.1px solid rgb(33, 57, 97);
+  border-radius: 28px;
+  border: 1px solid var(--border-card);
+  box-shadow:
+    0 24px 60px rgba(0, 0, 0, 0.55),
+    inset 0 1px 1px rgba(255, 255, 255, 0.12);
+  padding-bottom: 30px;
 }
 
+.box-start::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--arjuwani-bright),
+    transparent
+  );
+}
+
+/* ── شعار Hamza Gamal Portfolio ── */
 .link-portfolio {
   position: absolute;
-  top: 25px;
-  right: 25px;
+  top: 24px;
+  right: 24px;
   z-index: 100;
-  display: block;
-  width: 40px;
-  height: 40px;
-  background-color: transparent;
-  /* border: 1px solid rgba(255, 255, 255, 0.2); */
-  /* border-radius: 50%; */
-  transition: all 0.3s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  background: rgba(36, 17, 56, 0.75);
+  border: 1px solid rgba(217, 70, 239, 0.35);
+  border-radius: 13px;
+  transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 .link-portfolio img {
-  width: 80%;
+  width: 70%;
   object-fit: contain;
-  transform: scale(1.4);
-  opacity: 0.85;
-  margin-top: 10px;
-  transition:
-    transform 0.3s ease-in-out,
-    filter 0.3s ease-in-out,
-    opacity 0.3s;
+  opacity: 0.88;
+  transition: all 0.3s ease;
 }
+
+.link-portfolio:hover {
+  transform: scale(1.08);
+  border-color: var(--arjuwani-light);
+  box-shadow: 0 0 20px var(--arjuwani-glow);
+}
+
 .link-portfolio:hover img {
   opacity: 1;
-  transform: scale(1.3);
-  /* filter: brightness(1) saturate(100%) invert(58%) sepia(88%) saturate(1623%)
-    hue-rotate(201deg) brightness(101%) contrast(97%); */
+  transform: scale(1.1);
 }
+
 .link-portfolio::before {
   content: "►";
   position: absolute;
   top: 13px;
-  right: 50px;
+  right: 52px;
   font-size: 12px;
-  color: #0f172a;
+  color: #1f0b2e;
   text-shadow:
-    1px 0px 0px rgba(96, 165, 250, 0.4),
-    0px 1px 0px rgba(96, 165, 250, 0.4),
-    0px -1px 0px rgba(96, 165, 250, 0.4);
+    1px 0px 0px rgba(217, 70, 239, 0.5),
+    0px 1px 0px rgba(217, 70, 239, 0.5);
   z-index: 100000;
   opacity: 0;
   visibility: hidden;
-  transform: translateY(0) translateX(5px);
-  transition:
-    opacity 0.25s ease-in-out,
-    transform 0.25s ease-in-out,
-    visibility 0.25s;
-  transition-delay: 0.3s;
+  transform: translateX(5px);
+  transition: all 0.25s ease-in-out;
+  transition-delay: 0.1s;
 }
 
 .link-portfolio::after {
   content: "Hamza Gamal | Portfolio";
   position: absolute;
   top: 6px;
-  right: 61px;
-  background-color: #0f172a;
+  right: 64px;
+  background-color: #1f0b2e;
   color: #ffffff;
-  font-family:
-    system-ui,
-    -apple-system,
-    sans-serif;
+  font-family: system-ui, sans-serif;
   font-size: 11px;
-  font-weight: bold;
+  font-weight: 700;
   white-space: nowrap;
-  padding: 6px 12px;
-  border-radius: 6px;
-  border: 1px solid rgba(96, 165, 250, 0.4);
+  padding: 6px 14px;
+  border-radius: 8px;
+  border: 1px solid rgba(217, 70, 239, 0.45);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45);
   z-index: 99999;
   opacity: 0;
   visibility: hidden;
-  transform: translateY(0) translateX(5px);
-  transition:
-    opacity 0.25s ease-in-out,
-    transform 0.25s ease-in-out,
-    visibility 0.25s;
-  transition-delay: 0.3s;
+  transform: translateX(5px);
+  transition: all 0.25s ease-in-out;
+  transition-delay: 0.1s;
 }
 
 .link-portfolio:hover::before,
 .link-portfolio:hover::after {
   opacity: 1;
   visibility: visible;
-  transform: translateY(0) translateX(0);
+  transform: translateX(0);
 }
-/* .link-portfolio:hover {
-  border-color: rgba(96, 165, 250, 0.7); */
-  /* box-shadow: 0 0 12px rgba(96, 165, 250, 0.4);
-} */
 
 @media (max-width: 480px) {
   .link-portfolio::before,
@@ -127,19 +194,38 @@ input:focus {
   }
 }
 
+/* ── أيقونة المصحف الشريف بالأرجواني الملكي (حجم مثالي ومتناسق) ── */
 .icon-Qran {
-  width: 70px;
-  height: 70px;
+  width: 64px;
+  height: 64px;
   box-sizing: border-box;
-  border: solid 1px #2e4779;
-  padding: 8px;
-  margin-bottom: -5px;
-  border-radius: 15px;
+  border: 1.5px solid rgba(217, 70, 239, 0.5);
+  padding: 4px;
+  margin-top: 15px;
+  margin-bottom: -4px;
+  border-radius: 18px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  animation: icon 1s infinite alternate;
-  background-color: rgba(33, 57, 97, 0.5);
+  animation: iconGlow 2.5s infinite alternate ease-in-out;
+  background: linear-gradient(
+    145deg,
+    rgba(62, 18, 92, 0.7),
+    rgba(30, 10, 52, 0.7)
+  );
+  box-shadow:
+    0 10px 24px rgba(0, 0, 0, 0.48),
+    0 0 18px rgba(217, 70, 239, 0.32),
+    inset 0 1px 1px rgba(255, 255, 255, 0.25);
+  transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.icon-Qran:hover {
+  transform: scale(1.08) rotate(2deg);
+  border-color: var(--arjuwani-light);
+  box-shadow:
+    0 14px 28px rgba(0, 0, 0, 0.58),
+    0 0 28px var(--arjuwani-glow);
 }
 
 .icon-Qran img {
@@ -147,229 +233,340 @@ input:focus {
   width: 100%;
   height: 100%;
   object-fit: contain;
+  filter: drop-shadow(0 2px 10px rgba(217, 70, 239, 0.45));
 }
 
-@keyframes icon {
+@keyframes iconGlow {
   0% {
-    color: rgba(96, 165, 250, 0.4);
+    box-shadow: 0 0 14px rgba(217, 70, 239, 0.3);
+    border-color: rgba(217, 70, 239, 0.35);
   }
   100% {
-    color: rgb(96, 165, 250);
+    box-shadow: 0 0 30px rgba(217, 70, 239, 0.7);
+    border-color: var(--arjuwani-light);
   }
 }
 
+/* ── شارة عدد السور ── */
+.numper {
+  width: 105px;
+  height: 29px;
+  margin: 24px 0 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 33px;
+  font-family: ui-monospace, SFMono-Regular, monospace;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--arjuwani-hover);
+  background-color: rgba(192, 38, 211, 0.2);
+  border: 1px solid rgba(217, 70, 239, 0.4);
+  box-shadow: 0 0 14px rgba(217, 70, 239, 0.25);
+}
+
+/* ── عناوين الصفحة الرئيسية ── */
+.main-title {
+  color: #ffffff;
+  font-size: clamp(2rem, 5vw, 2.8rem);
+  font-family: "Amiri", serif;
+  font-weight: 700;
+  margin: 12px 0 4px;
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.6);
+  direction: rtl;
+}
+
+.sub-title {
+  color: var(--arjuwani-light);
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  font-weight: 500;
+  margin: 0 0 20px;
+  direction: rtl;
+}
+
+/* ── صندوق البحث الأرجواني ── */
 .search-box {
-  width: 75%;
+  width: 80%;
+  max-width: 540px;
   margin: auto;
   position: relative;
 }
 
 .search-box input {
   width: 100%;
-  height: 50px;
+  height: 52px;
   box-sizing: border-box;
-  color: rgb(229, 231, 235);
-  background-color: rgba(0, 0, 0, 0.4);
-  border: 1px solid rgb(61, 61, 61);
-  border-radius: 15px;
+  color: #fdf4ff;
+  background-color: rgba(18, 8, 30, 0.8);
+  border: 1px solid rgba(217, 70, 239, 0.35);
+  border-radius: 16px;
   direction: rtl;
-  font-size: 18px;
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  padding: 3px 50px 3px 15px;
-  transition: 0.3s;
+  font-size: 16px;
+  font-family: inherit;
+  padding: 4px 50px 4px 18px;
+  transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.45);
 }
+
+.search-box input:focus {
+  outline: none;
+  border-color: var(--arjuwani-light);
+  background-color: rgba(28, 12, 46, 0.95);
+  box-shadow:
+    0 0 24px var(--arjuwani-glow),
+    inset 0 1px 4px rgba(0, 0, 0, 0.3);
+}
+
+.search-box input::placeholder {
+  color: #d8b4fe;
+  font-size: 15px;
+}
+
 .searsh {
   position: absolute;
-  right: 12px;
+  right: 15px;
   top: 50%;
   transform: translateY(-50%);
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 20px;
-  display: flex;
-  align-items: center;
-  color: rgb(151, 151, 151);
+  font-size: 19px;
+  color: var(--arjuwani-light);
+  pointer-events: none;
 }
 
-.numper {
-  width: 90px;
-  height: 25px;
-  margin: 30px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 33px;
-  font-family:
-    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
-    "Courier New", monospace;
-  font-size: 0.75rem;
-  color: rgb(96, 165, 250);
-  background-color: #17255466;
-  border: 1px solid rgba(59, 130, 246, 0.2);
-}
-
+/* ── الدوائر الجمالية الخلفية الأرجوانية ── */
 .onecirkle {
-  height: 180px;
-  width: 180px;
+  height: 230px;
+  width: 230px;
   border-radius: 50%;
   position: absolute;
-  background-color: #5c5fff;
-  opacity: 0.15;
-  top: -50px;
-  left: -50px;
+  background: radial-gradient(
+    circle,
+    rgba(217, 70, 239, 0.28) 0%,
+    transparent 70%
+  );
+  top: -60px;
+  left: -60px;
   pointer-events: none;
 }
 
 .towcirkle {
-  height: 180px;
-  width: 180px;
+  height: 230px;
+  width: 230px;
   border-radius: 50%;
   position: absolute;
-  right: -50px;
-  background-color: #5c5fff;
-  bottom: -50px;
-  opacity: 0.15;
+  right: -60px;
+  background: radial-gradient(
+    circle,
+    rgba(192, 38, 211, 0.24) 0%,
+    transparent 70%
+  );
+  bottom: -60px;
   pointer-events: none;
 }
 
+/* ── شبكة مربعات السور ── */
 .parent {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-  width: 90%;
-  max-width: 750px;
-  perspective: 1000px;
-}
-
-.hikl {
-  display: inline-flex;
-  flex-direction: row;
-  background-color: rgba(17, 24, 39, 0.2);
-  width: calc(25% - 20px);
-  max-width: 120px;
-  min-width: 85px;
-  box-sizing: border-box;
-  height: 110px;
-  position: relative;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
-  margin: 8px;
-  color: #ffffff;
-  border-radius: 12px;
-  transform: perspective(800px) rotateX(0deg) rotateY(0deg) translateZ(0);
-  transform-style: preserve-3d;
-  transition:
-    transform 220ms cubic-bezier(0.2, 0.75, 0.25, 1),
-    background-color 220ms ease,
-    border-color 220ms ease,
-    box-shadow 220ms ease;
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  text-decoration: none;
-  font-size: 1rem;
-  border: 1px solid rgb(31, 41, 55);
+  width: 92%;
+  max-width: 820px;
+  margin: 0 auto;
 }
 
 a {
   text-decoration: none;
-  margin: auto;
-  text-align: center;
+  color: inherit;
 }
 
-.hikl:hover {
-  background-color: rgba(23, 37, 84, 0.2);
-  color: rgb(96, 165, 250);
-  transform: perspective(800px) rotateX(var(--tilt-x, 0deg))
-    rotateY(var(--tilt-y, 0deg)) translateZ(1px);
-  border: 1.9px solid rgb(59, 130, 246);
-  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.18);
+/* ── بطاقة السورة 3D الأرجوانية الفخمة ── */
+.hikl {
+  display: inline-flex;
+  flex-direction: row;
+  background-color: rgba(28, 13, 46, 0.68);
+  background-image: radial-gradient(
+    circle at var(--glow-x, 50%) var(--glow-y, 50%),
+    rgba(232, 121, 249, 0) 0%,
+    transparent 70%
+  );
+  width: calc(25% - 20px);
+  max-width: 125px;
+  min-width: 88px;
+  box-sizing: border-box;
+  height: 112px;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  margin: 8px;
+  color: #ffffff;
+  border-radius: 16px;
+  transform: perspective(600px) rotateX(0deg) rotateY(0deg) translateZ(0);
+  transform-style: preserve-3d;
+  transition:
+    transform 280ms cubic-bezier(0.2, 0.75, 0.25, 1),
+    background 280ms ease,
+    border-color 280ms ease,
+    box-shadow 280ms ease,
+    color 200ms ease;
+  font-family: "Tajawal", system-ui, sans-serif;
+  font-size: 1.05rem;
+  border: 1px solid rgba(217, 70, 239, 0.24);
+  overflow: hidden;
+  will-change: transform;
+  -webkit-tap-highlight-color: transparent;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+}
+
+/* شريط إضاءة زجاجي علوي ناعم */
+.hikl::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 10%;
+  right: 10%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.35),
+    transparent
+  );
+  pointer-events: none;
+}
+
+/* سنة النور الأرجوانية وتأثير 3D متناسق وفخم عند اللمس والتحريك */
+.hikl:hover,
+.hikl:active,
+.hikl.is-tilting {
+  background-color: rgba(58, 20, 88, 0.7);
+  background-image: radial-gradient(
+    circle 90px at var(--glow-x, 50%) var(--glow-y, 50%),
+    rgba(240, 171, 252, 0.38) 0%,
+    rgba(217, 70, 239, 0.2) 50%,
+    transparent 100%
+  );
+  color: var(--arjuwani-hover);
+  transform: perspective(600px) rotateX(var(--tilt-x, -4deg))
+    rotateY(var(--tilt-y, 4deg)) translateZ(12px) scale3d(1.06, 1.06, 1.06);
+  border-color: rgba(240, 171, 252, 0.9);
+  box-shadow:
+    0 16px 36px -4px rgba(0, 0, 0, 0.65),
+    0 0 26px var(--arjuwani-glow),
+    inset 0 1px 2px rgba(255, 255, 255, 0.35);
+  z-index: 10;
 }
 
 .hikl.is-tilting {
   transition:
-    transform 70ms linear,
-    background-color 220ms ease,
-    border-color 220ms ease,
-    box-shadow 220ms ease;
+    transform 60ms linear,
+    background 160ms ease,
+    border-color 160ms ease,
+    box-shadow 160ms ease;
 }
 
 @media (hover: none) and (pointer: coarse) {
   .hikl:active {
-    transform: perspective(800px) rotateX(1deg) rotateY(-1deg)
-      translateZ(1px);
-    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.18);
+    transform: perspective(600px) rotateX(-5deg) rotateY(3deg) translateZ(10px)
+      scale3d(1.06, 1.06, 1.06);
+    border-color: var(--arjuwani-light);
+    box-shadow:
+      0 14px 28px -4px rgba(0, 0, 0, 0.6),
+      0 0 26px var(--arjuwani-glow);
   }
 }
 
+/* رقم السورة داخل المربع */
 .o-h {
   position: absolute;
-  top: 10px;
-  right: 10px;
-  color: rgba(96, 165, 250, 0.6);
-  background-color: #3b82f60d;
-  width: 22px;
-  height: 20px;
-  padding-top: 2px;
-  border-radius: 6px;
-  font-family:
-    ui-monospace,
-    SFMono-Regular,
-    Menlo,
-    Monaco,
-    Consolas,
-    Liberation Mono,
-    Courier New,
-    monospace;
-  border: solid 1px #3b82f61a;
-  font-size: small;
+  top: 9px;
+  right: 9px;
+  color: var(--arjuwani-light);
+  background-color: rgba(217, 70, 239, 0.16);
+  width: 25px;
+  height: 23px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 7px;
+  font-family: ui-monospace, SFMono-Regular, monospace;
+  border: 1px solid rgba(217, 70, 239, 0.35);
+  font-size: 0.78rem;
+  font-weight: 700;
+  transition: all 0.25s ease;
 }
 
-.hikl:hover .o-h {
-  color: rgb(96, 165, 250);
+.hikl:hover .o-h,
+.hikl:active .o-h,
+.hikl.is-tilting .o-h {
+  color: #ffffff;
+  background-color: var(--arjuwani-primary);
+  border-color: var(--arjuwani-hover);
+  box-shadow: 0 0 14px var(--arjuwani-glow);
+  transform: translateZ(8px);
 }
 
-.hikl:hover .aya {
-  color: rgb(96, 165, 250);
-}
-
+/* عدد الآيات */
 .aya {
   position: absolute;
-  color: rgb(107, 114, 128);
-  bottom: 10px;
-  font-size: 0.75rem;
+  color: #d8b4fe;
+  bottom: 9px;
+  font-size: 0.74rem;
+  font-weight: 500;
+  transition: all 0.25s ease;
 }
 
-/* ── موبايل ── */
-@media (max-width: 480px) {
+.hikl:hover .aya,
+.hikl:active .aya,
+.hikl.is-tilting .aya {
+  color: var(--arjuwani-hover);
+  transform: translateZ(6px);
+}
+
+/* ── تصميم الموبايل ── */
+@media (max-width: 600px) {
   .box-start {
     width: 95%;
-    border-radius: 15px;
+    border-radius: 20px;
+    padding-bottom: 22px;
+  }
+
+  .search-box {
+    width: 86%;
   }
 
   .hikl {
-    width: calc(33% - 16px);
-    height: 95px;
+    width: calc(33.333% - 14px);
+    height: 98px;
     margin: 6px;
-    font-size: 0.85rem;
+    font-size: 0.92rem;
+    border-radius: 14px;
   }
 
   .o-h {
-    font-size: 0.65rem;
-    width: 18px;
-    height: 18px;
+    font-size: 0.7rem;
+    width: 22px;
+    height: 20px;
+    top: 7px;
+    right: 7px;
+  }
+
+  .aya {
+    font-size: 0.68rem;
+    bottom: 7px;
   }
 }
-@media (max-width: 480px) {
-  .search-box {
-    width: 78%;
-  }
-}
-@media (max-width: 450px) {
-  input::placeholder {
-    font-size: 15px;
+
+@media (max-width: 400px) {
+  .hikl {
+    width: calc(33.333% - 10px);
+    margin: 4px;
+    height: 94px;
+    font-size: 0.86rem;
   }
 }
